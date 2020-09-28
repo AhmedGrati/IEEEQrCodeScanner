@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_ieee/pages/home_page.dart';
+import 'package:qr_code_ieee/route_generator.dart';
 import 'package:qr_code_ieee/service_set_up.dart';
 
 void main() {
@@ -13,6 +14,8 @@ class IeeeScanQrCodeApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomePage(),
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

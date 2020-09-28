@@ -15,87 +15,72 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  ScanResult scanResult;
   SizeConfig sizeConfig = SizeConfig();
-
-  UserService get userService => GetIt.I<UserService>();
-
-  Future<void> showDialogFunction(ApiResponse<User> res) async {
-    String message = res.data != null ? res.data : res.errorMessage;
-    Color messageColor = res.data != null ? Colors.green : Colors.red;
-    String imageName = res.data != null ? 'check' : 'error';
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return CustomDialog(
-            message: message,
-            messageColor: messageColor,
-            imageName: imageName,
-          );
-        });
-  }
-
-  Future _qrCodeScan() async {
-    try {
-      var res = await BarcodeScanner.scan();
-      setState(() {
-        scanResult = res;
-      });
-      if (scanResult.rawContent != "") {
-        final ApiResponse<User> response =
-            await userService.getUserById(scanResult.rawContent);
-        showDialogFunction(response);
-      }
-    } on PlatformException catch (e) {
-      var result = ScanResult(
-        type: ResultType.Error,
-        format: BarcodeFormat.unknown,
-      );
-      if (e.code == BarcodeScanner.cameraAccessDenied) {
-        setState(() {
-          result.rawContent = 'The user did not grant the camera permission!';
-        });
-      } else {
-        result.rawContent = 'Unknown error: $e';
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     sizeConfig.init(context);
     double defaultSize = SizeConfig.defaultSize;
     return Scaffold(
-      backgroundColor: Color(0xffd2d5cd),
+      backgroundColor: Colors.white,
       body: SafeArea(
-        child: Container(
-          child: Center(
+        child: Center(
+          child: Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
-                  width: defaultSize * 25,
-                  height: defaultSize * 6,
-                  decoration: BoxDecoration(
-                      color: Color(0xff0066a1),
-                      borderRadius: BorderRadius.circular(20.0)),
-                  child: FlatButton(
-                    onPressed: () {
-                      _qrCodeScan();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        'Scan Qr Code',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold),
-                      ),
+                    height: 200,
+                    width: 200,
+                    child: Image.asset("images/sb-logo.png")
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text('Welcome to IEEE INSAT student branch.' ,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Roboto',
+                      fontSize: 30.0
                     ),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Please give access your camera so we can scan and provide you what is inside the code.' ,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.blueGrey,
+                      fontFamily: 'Roboto',
+                      fontSize: 20.0
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Color(0xffeb5e55),
+                      borderRadius: BorderRadius.circular(10.0)
+                    ),
+                    child: FlatButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/scan');
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('Let \'s Get Started' ,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
