@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class UserService {
 
   Future<ApiResponse<User>> getUserById(String id) {
-    return http.get(GlobalConfig.API_URL+"/ieee/$id" , headers: GlobalConfig.headers).
+    return http.get(GlobalConfig.API_URL+"/api/member/ieee/$id" , headers: GlobalConfig.headers).
       then((res) {
         print("res : ${res.body}");
         if(res.statusCode == 200) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_ieee/consts.dart';
 class CustomDialog extends StatelessWidget {
   final Color messageColor;
   final String message;
@@ -21,7 +22,7 @@ class CustomDialog extends StatelessWidget {
             Padding(
 
               padding: const EdgeInsets.all(16.0),
-              child: Image.asset("images/$imageName.png"),
+              child: Image.asset("images/$imageName.webp"),
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -30,7 +31,7 @@ class CustomDialog extends StatelessWidget {
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,
-                    fontFamily: 'Rajdhani'
+                    fontFamily: 'Serif'
                 ),
               ),
             ),
@@ -48,7 +49,7 @@ class CustomDialog extends StatelessWidget {
               width: 175,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.0),
-                  color: Color(0xff0066a1)
+                  color: kPrimaryBlueColorHex
               ),
               child: FlatButton(
                 onPressed: () {
@@ -68,7 +69,7 @@ class CustomDialog extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w900,
-                            fontFamily: 'Rajdhani'
+                            fontFamily: 'Serif'
                         ),
                       ),
                     ),
