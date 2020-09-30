@@ -91,7 +91,7 @@ class _ScanPageState extends State<ScanPage> {
             : Text('');
         final ScanBody scanBody = ScanBody(
           secretCode: secretCode,
-          memberIEEEId: scanResult.rawContent
+            memberIeeeId: scanResult.rawContent
         );
         final ApiResponse<User> response =
             await partnerService.scanQRCode(scanBody);

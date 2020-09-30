@@ -3,12 +3,12 @@ part 'scan_body.g.dart';
 
 @JsonSerializable()
 class ScanBody {
-  String memberIEEEId;
+  String memberIeeeId;
   String secretCode;
 
   ScanBody({
     this.secretCode,
-    this.memberIEEEId
+    this.memberIeeeId
   });
 
   factory ScanBody.fromJson(Map<String, dynamic> item) => _$ScanBodyFromJson(item);
