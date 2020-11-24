@@ -8,10 +8,10 @@ part of 'secret.dart';
 
 Secret _$SecretFromJson(Map<String, dynamic> json) {
   return Secret(
-    secretCode: json['secretCode'] as String,
+    secretCode: json['code'] as String,
   );
 }
 
 Map<String, dynamic> _$SecretToJson(Secret instance) => <String, dynamic>{
-      'secretCode': instance.secretCode,
+      'code': instance.secretCode,
     };

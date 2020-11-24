@@ -7,7 +7,7 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:qr_code_ieee/model/api_response.dart';
-import 'package:qr_code_ieee/model/user.dart';
+import 'package:qr_code_ieee/model/QrScanResponse.dart';
 import 'package:qr_code_ieee/service/user_service.dart';
 import 'package:qr_code_ieee/widgets/custom_dialog.dart';
 
@@ -26,7 +26,7 @@ class _ScanPageState extends State<ScanPage> {
 
   PartnerService get partnerService => GetIt.I<PartnerService>();
 
-  Future<void> showDialogFunction(ApiResponse<User> res) async {
+  Future<void> showDialogFunction(ApiResponse<QrScanResponse> res) async {
     String message = res.data != null ? res.data : res.errorMessage;
     Color messageColor = res.data != null ? Colors.green : Colors.red;
     String imageName = res.data != null ? 'check' : 'error';
@@ -93,7 +93,7 @@ class _ScanPageState extends State<ScanPage> {
           secretCode: secretCode,
             memberIeeeId: scanResult.rawContent
         );
-        final ApiResponse<User> response =
+        final ApiResponse<QrScanResponse> response =
             await partnerService.scanQRCode(scanBody);
         Navigator.pop(context);
         showDialogFunction(response);

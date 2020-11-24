@@ -6,13 +6,13 @@ import 'package:qr_code_ieee/model/partner.dart';
 import 'package:http/http.dart' as http;
 import 'package:qr_code_ieee/model/scan_body.dart';
 import 'package:qr_code_ieee/model/secret.dart';
-import 'package:qr_code_ieee/model/user.dart';
+import 'package:qr_code_ieee/model/QrScanResponse.dart';
 class PartnerService {
-  final String url = GlobalConfig.API_URL+"/api/partner";
+  final String url = GlobalConfig.API_URL;
   Future<ApiResponse<Partner>> loginPartner(Secret secret) {
-
+    print(secret.toJson());
     return http.post(
-      this.url+"/code",
+      this.url+"partner/auth",
       headers: GlobalConfig.headers,
       body: json.encode(secret.toJson())
     ).then((res) {
@@ -27,32 +27,31 @@ class PartnerService {
         return ApiResponse<Partner>(error: true , errorMessage: 'invalid secret code');
       }
     }).catchError((err) {
-      print('error : $err');
       return ApiResponse<Partner>(errorMessage: 'An error occurred!',error: true);
     });
   }
 
-  Future<ApiResponse<User>> scanQRCode(ScanBody scan) {
+  Future<ApiResponse<QrScanResponse>> scanQRCode(ScanBody scan) {
 
     return http.post(
-        this.url+"/code",
+        this.url+"/qr-code",
         headers: GlobalConfig.headers,
         body: json.encode(scan.toJson())
     ).then((res) {
       var jsonData = json.decode(res.body);
-      User user = User.fromJson(jsonData);
-      print("user: ${user.membershipActive}");
+      QrScanResponse user = QrScanResponse.fromJson(jsonData);
+      print("user: ${user.expiredAccout}");
       if(res.statusCode == 201 || res.statusCode == 200) {
-        if(user.membershipActive) {
-          return ApiResponse<User>(data: user);
+        if(user.expiredAccout) {
+          return ApiResponse<QrScanResponse>(data: user);
         }
-        return ApiResponse<User>(error: true , errorMessage: 'Member not active!');
+        return ApiResponse<QrScanResponse>(error: true , errorMessage: 'Member not active!');
       }else{
-        return ApiResponse<User>(error: true , errorMessage: 'Member not found!');
+        return ApiResponse<QrScanResponse>(error: true , errorMessage: 'Member not found!');
       }
     }).catchError((err) {
       print('error : $err');
-      return ApiResponse<User>(errorMessage: 'An error occurred!',error: true);
+      return ApiResponse<QrScanResponse>(errorMessage: 'An error occurred!',error: true);
     });
   }
 

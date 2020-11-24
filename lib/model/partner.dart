@@ -4,17 +4,19 @@ import 'package:json_annotation/json_annotation.dart';
 part 'partner.g.dart';
 @JsonSerializable()
 class Partner {
-  String id;
+  int id;
   String name;
   String email;
-  String secretCode;
+  String code;
   bool active;
+  double rate;
   Partner({
     this.id,
     this.name,
     this.email,
     this.active,
-    this.secretCode
+    this.code,
+    this.rate
   });
 
   factory Partner.fromJson(Map<String, dynamic> item) => _$PartnerFromJson(item);
