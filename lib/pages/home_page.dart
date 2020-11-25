@@ -32,16 +32,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     sizeConfig.init(context);
+    double defaultSize = SizeConfig.defaultSize;
     return Scaffold(
       backgroundColor: kGreyColorHex,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            height: MediaQuery.of(context).size.height,
             child: Column(
               children: [
-                Expanded(
-                  flex: 3,
+                Container(
+                  height: defaultSize * 65,
                   child: Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -119,7 +119,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                Expanded(
+                Container(
+                  height: defaultSize * 22.5,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(

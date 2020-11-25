@@ -117,16 +117,18 @@ class _ScanPageState extends State<ScanPage> {
   @override
   Widget build(BuildContext context) {
     secretCode = ModalRoute.of(context).settings.arguments;
-    print(secretCode);
+    double defaultSize = SizeConfig.defaultSize;
+    print("default size : $defaultSize");
     return Scaffold(
       backgroundColor: kGreyColorHex,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            height: MediaQuery.of(context).size.height,
+
             child: Column(
               children: [
-                Expanded(
+                Container(
+                  height: defaultSize * 26,
                   child: Column(
                     children: [
                       Hero(
@@ -178,8 +180,9 @@ class _ScanPageState extends State<ScanPage> {
                     ],
                   ),
                 ),
-                Expanded(
-                  flex: 2,
+                Container(
+                  height: defaultSize * 60,
+                  width: MediaQuery.of(context).size.width,
                   child: Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
