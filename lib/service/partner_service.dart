@@ -32,22 +32,27 @@ class PartnerService {
   }
 
   Future<ApiResponse<QrScanResponse>> scanQRCode(ScanBody scan) {
-
+    print("scan : ${scan.toJson()}");
+    print("scan : ${this.url+"qr-code"}");
     return http.post(
-        this.url+"/qr-code",
+        this.url+"qr-code",
         headers: GlobalConfig.headers,
         body: json.encode(scan.toJson())
     ).then((res) {
       var jsonData = json.decode(res.body);
       QrScanResponse user = QrScanResponse.fromJson(jsonData);
-      print("user: ${user.expiredAccout}");
+      print("user: ${res.statusCode}");
       if(res.statusCode == 201 || res.statusCode == 200) {
-        if(user.expiredAccout) {
-          return ApiResponse<QrScanResponse>(data: user);
+        if(user.hasIEEEAcount) {
+          if(!user.expiredAccount) {
+            return ApiResponse<QrScanResponse>(data: user);
+          }
+          return ApiResponse<QrScanResponse>(error: true , errorMessage: 'Member not active!');
+        }else{
+          return ApiResponse<QrScanResponse>(error: true , errorMessage: 'Member not found!');
         }
-        return ApiResponse<QrScanResponse>(error: true , errorMessage: 'Member not active!');
       }else{
-        return ApiResponse<QrScanResponse>(error: true , errorMessage: 'Member not found!');
+        return ApiResponse<QrScanResponse>(error: true , errorMessage: 'Error ${res.statusCode}!');
       }
     }).catchError((err) {
       print('error : $err');

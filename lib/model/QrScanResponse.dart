@@ -7,9 +7,9 @@ class QrScanResponse {
   int id;
   DateTime date;
   String memberId;
-  String partnerId;
+  int partnerId;
   bool hasIEEEAcount;
-  bool expiredAccout;
+  bool expiredAccount;
 
   QrScanResponse({
     this.id,
@@ -17,7 +17,7 @@ class QrScanResponse {
     this.memberId,
     this.partnerId,
     this.hasIEEEAcount,
-    this.expiredAccout
+    this.expiredAccount
   });
 
   factory QrScanResponse.fromJson(Map<String, dynamic> item) => _$QrScanResponseFromJson(item);

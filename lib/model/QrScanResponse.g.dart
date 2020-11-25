@@ -11,9 +11,9 @@ QrScanResponse _$QrScanResponseFromJson(Map<String, dynamic> json) {
     id: json['id'] as int,
     date: json['date'] == null ? null : DateTime.parse(json['date'] as String),
     memberId: json['memberId'] as String,
-    partnerId: json['partnerId'] as String,
+    partnerId: json['partnerId'] as int,
     hasIEEEAcount: json['hasIEEEAcount'] as bool,
-    expiredAccout: json['expiredAccout'] as bool,
+    expiredAccount: json['expiredAccount'] as bool,
   );
 }
 
@@ -24,5 +24,5 @@ Map<String, dynamic> _$QrScanResponseToJson(QrScanResponse instance) =>
       'memberId': instance.memberId,
       'partnerId': instance.partnerId,
       'hasIEEEAcount': instance.hasIEEEAcount,
-      'expiredAccout': instance.expiredAccout,
+      'expiredAccount': instance.expiredAccount,
     };

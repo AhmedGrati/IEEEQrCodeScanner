@@ -8,12 +8,12 @@ part of 'scan_body.dart';
 
 ScanBody _$ScanBodyFromJson(Map<String, dynamic> json) {
   return ScanBody(
-    secretCode: json['secretCode'] as String,
-    memberIeeeId: json['memberIeeeId'] as String,
+    secretCode: json['code'] as String,
+    memberIeeeId: json['id'] as String,
   );
 }
 
 Map<String, dynamic> _$ScanBodyToJson(ScanBody instance) => <String, dynamic>{
-      'memberIeeeId': instance.memberIeeeId,
-      'secretCode': instance.secretCode,
+      'code': instance.memberIeeeId,
+      'id': instance.secretCode,
     };

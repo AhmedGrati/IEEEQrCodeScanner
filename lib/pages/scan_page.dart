@@ -27,7 +27,7 @@ class _ScanPageState extends State<ScanPage> {
   PartnerService get partnerService => GetIt.I<PartnerService>();
 
   Future<void> showDialogFunction(ApiResponse<QrScanResponse> res) async {
-    String message = res.data != null ? res.data : res.errorMessage;
+    String message = res.data != null ? "Member Verified!" : res.errorMessage;
     Color messageColor = res.data != null ? Colors.green : Colors.red;
     String imageName = res.data != null ? 'check' : 'error';
     return showDialog(
@@ -89,9 +89,10 @@ class _ScanPageState extends State<ScanPage> {
                   );
                 })
             : Text('');
+        // todo: should be switched
         final ScanBody scanBody = ScanBody(
-          secretCode: secretCode,
-            memberIeeeId: scanResult.rawContent
+          secretCode: scanResult.rawContent,
+            memberIeeeId: secretCode
         );
         final ApiResponse<QrScanResponse> response =
             await partnerService.scanQRCode(scanBody);
