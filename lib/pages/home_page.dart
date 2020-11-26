@@ -6,6 +6,7 @@ import 'package:qr_code_ieee/model/secret.dart';
 import 'package:qr_code_ieee/pages/scan_page.dart';
 import 'package:qr_code_ieee/service/partner_service.dart';
 import 'package:qr_code_ieee/widgets/social_rounded_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../consts.dart';
 import '../size_config.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -22,12 +23,37 @@ class _HomePageState extends State<HomePage> {
   PartnerService partnerService = PartnerService();
   FToast fToast;
 
+  void manageUserRedirection() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String secretCode = sharedPreferences.getString('secretCode');
+    print('secret home code : $secretCode');
+    if (secretCode != null) {
+      redirectToScanPage(secretCode);
+    }
+  }
+
+  void changeSecretCode(String secretCode) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString('secretCode', secretCode);
+  }
+
   @override
   void initState() {
     super.initState();
     fToast = FToast();
     fToast.init(context);
+    manageUserRedirection();
   }
+
+  void redirectToScanPage(String secretCode) {
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ScanPage(),
+            settings: RouteSettings(arguments: secretCode)));
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +87,10 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Hero(
-                          tag:'logo',
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 16.0),
-                            child: Image.asset("images/sb-logo-white.webp"),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: Image.asset(
+                            "images/sb-logo-white.webp",
                           ),
                         ),
                         Padding(
@@ -74,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                           child: TextFormField(
                             onChanged: (value) {
                               setState(() {
-                                secretCode = value;
+                                secretCode = value.trim();
                               });
                             },
                             decoration: InputDecoration(
@@ -139,12 +164,8 @@ class _HomePageState extends State<HomePage> {
                               if (!res.error) {
                                 _showToast(Colors.greenAccent,
                                     "Logged in successfully", Icons.check);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ScanPage(),
-                                        settings: RouteSettings(
-                                            arguments: secretCode)));
+                                changeSecretCode(secretCode);
+                                redirectToScanPage(secretCode);
                               } else {
                                 _showToast(Colors.redAccent, res.errorMessage,
                                     Icons.error);

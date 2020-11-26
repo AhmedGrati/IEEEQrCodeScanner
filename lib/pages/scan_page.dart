@@ -91,9 +91,7 @@ class _ScanPageState extends State<ScanPage> {
             : Text('');
         // todo: should be switched
         final ScanBody scanBody = ScanBody(
-          secretCode: scanResult.rawContent,
-            memberIeeeId: secretCode
-        );
+            secretCode: scanResult.rawContent, memberIeeeId: secretCode);
         final ApiResponse<QrScanResponse> response =
             await partnerService.scanQRCode(scanBody);
         Navigator.pop(context);
@@ -124,21 +122,17 @@ class _ScanPageState extends State<ScanPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-
             child: Column(
               children: [
                 Container(
                   height: defaultSize * 26,
                   child: Column(
                     children: [
-                      Hero(
-                        tag:'logo',
-                        child: Container(
-                          width: SizeConfig.defaultSize *  25,
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Image.asset("images/sb-logo.webp"),
-                          ),
+                      Container(
+                        width: SizeConfig.defaultSize * 25,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Image.asset("images/sb-logo.webp"),
                         ),
                       ),
                       Padding(
@@ -232,7 +226,6 @@ class _ScanPageState extends State<ScanPage> {
                           version: QrVersions.auto,
                           size: SizeConfig.defaultSize * 30,
                         ),
-
                       ],
                     ),
                   ),

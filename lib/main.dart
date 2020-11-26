@@ -9,10 +9,11 @@ void main() {
   ServiceSetUp serviceSetUp = ServiceSetUp();
 
   runApp(
-     DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => IeeeScanQrCodeApp(),
-    )
+//     DevicePreview(
+//      enabled: !kReleaseMode,
+//      builder: (context) => ,
+//    )
+      IeeeScanQrCodeApp()
   );
 }
 
@@ -20,8 +21,6 @@ class IeeeScanQrCodeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      locale: DevicePreview.of(context).locale,
-      builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       home: HomePage(),
       initialRoute: '/',
